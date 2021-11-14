@@ -11,16 +11,32 @@
     <header>
         <h1 class="dashboard">Weather Dashboard</h1>
     </header>
-    <div id="city-search">
-        <h2>Search for a city:</h2>
-        <form>
-            <input type="text" id="city-entry" placeholder="Enter City Name">
 
-            <button type="submit">Get me the weather!</button>
-        </form>
+    <main class="main-style">
+        <!-- start elements for left side search -->
+        <div id="city-search">
+            <form id="search-form">
+                <label class="search-label" for="city-entry">Search for a city:</label>
+                <input type="text" id="city-entry" placeholder="Enter City Name">
+                <button type="submit" id="btn">Get me the weather!</button>
+            </form>
+        </div>
+        <div id="city-history">
+            <!-- dynamically create buttons from city search here -->
+        </div>
 
-    </div>
-    
+        <!-- end left side search -->
+
+        <!-- city info element -->
+        <div class="city display">
+
+        </div>
+
+        <!-- forecast element -->
+        <div class="forecast">
+
+        </div>
+    </main>   
     <script src="./assets/script.js"></script>
 </body>
 </html>

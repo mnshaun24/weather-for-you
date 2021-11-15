@@ -33,7 +33,7 @@ var forecastSubmitHandler = function(event) {
 var getForecast = function(city) {
 
     // create variable to understand city input
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myKey;
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myKey +"&units=imperial";
 
     // run function to return weather data about city
     var response = fetch(queryURL).then(function(response) {
@@ -46,14 +46,40 @@ var getForecast = function(city) {
 // create function to display the weather in the main window
 
 var displayWeather = function(weather, searchTerm) {
-    // clear old content before displaying new content
-    weatherContainerEl.textContent = "";
-    weatherSearchTerm.textContent = searchTerm;
 
-    // display actual weather
-    var cityTemp = weather.main.temp
-    console.log(weather);
-    console.log(searchTerm);
+    // create variable for current date
+    var dateNow = moment().subtract(10, 'days').calendar();
+
+
+    // clear old content and display new content
+    weatherContainerEl.textContent = "";
+    weatherSearchTerm.textContent = searchTerm
+
+    // display the date along with the city
+    // var dateNow = moment().subtract(10, 'days').calendar();
+    // var showDate = document.querySelector("#show-date");
+    // showDate.textContent = dateNow;
+
+
+    // display the local weather
+    var mainWeatherEl = document.createElement("p");
+    mainWeatherEl.textContent = (weather.weather[0].main);
+    weatherContainerEl.appendChild(mainWeatherEl);
+
+    // display temperature
+    var mainTempEl = document.createElement("p");
+    mainTempEl.textContent = ("Temp: " + Math.round(weather.main.temp) + " " + '\xB0' + "F");
+    weatherContainerEl.appendChild(mainTempEl);
+
+    // display wind speed
+    var mainWindEl = document.createElement("p");
+    mainWindEl.textContent = ("Wind: " + weather.wind.speed + " mph");
+    weatherContainerEl.appendChild(mainWindEl);
+
+    // display humidity
+    var mainHumidityEl = document.createElement("p");
+    mainHumidityEl.textContent = ("Humidity: " + weather.main.humidity + '\u0025')
+    weatherContainerEl.appendChild(mainHumidityEl);
 };
 
 // make an event listener function when someone submits a city name

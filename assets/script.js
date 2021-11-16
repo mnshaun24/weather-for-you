@@ -56,7 +56,6 @@ var displayWeather = function(weather, searchTerm) {
     var showDate = document.querySelector("#show-date");
     showDate.textContent = dateNow;
 
-
     // display the local weather
     var mainWeatherEl = document.createElement("p");
     mainWeatherEl.textContent = (weather.weather[0].main);
@@ -78,11 +77,11 @@ var displayWeather = function(weather, searchTerm) {
     weatherContainerEl.appendChild(mainHumidityEl);
 
     var APIUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=51133e26b6dba1c42e2e1b1a94f55fa2";
-
+    mainUvEl = document.createElement("p");
+    mainUvEl.textContent = (onecall.current.uvi);
+    weatherContainerEl.appendChild(mainUvEl);
 };
 
 // make an event listener function when someone submits a city name
 
 citySearchEl.addEventListener("submit", forecastSubmitHandler);
-
-getForecast();

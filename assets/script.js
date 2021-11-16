@@ -1,9 +1,9 @@
 // create variable for API Key
 
-// use this in browser http://api.openweathermap.org/data/2.5/weather?q=minneapolis&appid=51133e26b6dba1c42e2e1b1a94f55fa2
+// use this in browser https://api.openweathermap.org/data/2.5/weather?q=minneapolis&appid=51133e26b6dba1c42e2e1b1a94f55fa2&units=imperial
 var myKey = "51133e26b6dba1c42e2e1b1a94f55fa2";
 
-// create global variables
+// create global variables 
 
 var citySearchEl = document.querySelector("#search-form");
 var cityInputEl = document.querySelector("#city-entry");
@@ -47,18 +47,14 @@ var getForecast = function(city) {
 
 var displayWeather = function(weather, searchTerm) {
 
-    // create variable for current date
-    var dateNow = moment().subtract(10, 'days').calendar();
-
-
     // clear old content and display new content
     weatherContainerEl.textContent = "";
     weatherSearchTerm.textContent = searchTerm
 
     // display the date along with the city
-    // var dateNow = moment().subtract(10, 'days').calendar();
-    // var showDate = document.querySelector("#show-date");
-    // showDate.textContent = dateNow;
+    var dateNow = moment().format('L');
+    var showDate = document.querySelector("#show-date");
+    showDate.textContent = dateNow;
 
 
     // display the local weather
@@ -80,6 +76,9 @@ var displayWeather = function(weather, searchTerm) {
     var mainHumidityEl = document.createElement("p");
     mainHumidityEl.textContent = ("Humidity: " + weather.main.humidity + '\u0025')
     weatherContainerEl.appendChild(mainHumidityEl);
+
+    var APIUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=51133e26b6dba1c42e2e1b1a94f55fa2";
+
 };
 
 // make an event listener function when someone submits a city name

@@ -11,8 +11,7 @@ var weatherContainerEl = document.querySelector(".city-display");
 var weatherSearchTerm = document.querySelector(".what-city");
 var forecastContainerEl = document.querySelector(".forecast")
 
-
-// create main function that acts when city is searched for
+// create main function that acts when city is searched fo"r
 
 var forecastSubmitHandler = function(event) {
     event.preventDefault();
@@ -37,7 +36,7 @@ var getForecast = function(city) {
 
     // create variable to understand city input
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myKey +"&units=imperial";
-
+    
     // run function to return weather data about city
     fetch(queryURL)
         .then(function(response) {
@@ -56,14 +55,18 @@ var displayWeather = function(weather, searchTerm) {
     weatherContainerEl.textContent = "";
     weatherSearchTerm.textContent = searchTerm
 
+    // create variable to display icon
+    var weatherIcon = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png";
+    
+    
+
     // display the date along with the city
     var dateNow = moment().format('L');
     var showDate = document.querySelector("#show-date");
     showDate.textContent = dateNow;
 
     // display the local weather
-    var mainWeatherEl = document.createElement("p");
-    mainWeatherEl.textContent = (weather.weather[0].icon);
+    var weatherIconEl = document.querySelector("#weather-icon");
     weatherContainerEl.appendChild(mainWeatherEl);
 
     // display temperature

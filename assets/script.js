@@ -110,6 +110,9 @@ var weatherLoop = function(data2) {
 
     for (let day = 0; day < 5; day++) {
 
+    // inserted console log for testing
+    console.log(data2);
+
     // set up variable for icon display
     var forecastIcon = "http://openweathermap.org/img/wn/" + data2.daily[day].weather[0].icon + ".png";
 

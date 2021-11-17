@@ -22,7 +22,7 @@ var forecastSubmitHandler = function(event) {
     // check to ensure proper city name was entered
     if (city) {
         getForecast(city);
-        weatherLoop(city);
+        // weatherLoop(city);
         cityInputEl.value = "";
     } else {
         alert("Please enter a valid city");
@@ -85,13 +85,14 @@ var displayWeather = function(weather, searchTerm) {
     weatherContainerEl.appendChild(mainHumidityEl);
 
     // use first API call to gather needed information from second API call
-    var APIUrl = "http://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=51133e26b6dba1c42e2e1b1a94f55fa2";
+    var APIUrl = "http://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=" + myKey + "&units=imperial";
 
     // fetch second API call and return object then append information from object
         fetch(APIUrl)
         .then(function (response2) {
             response2.json()
             .then(function(data2) {
+                weatherLoop(data2)
                 mainUvEl = document.createElement("p");
                 mainUvEl.textContent = ("UV Index: " + data2.current.uvi);
                 weatherContainerEl.appendChild(mainUvEl);
@@ -102,18 +103,28 @@ var displayWeather = function(weather, searchTerm) {
 
 // create loop to display forecast data
 
-var weatherLoop = function(loopWeather, searchTermLoop) {
+var weatherLoop = function(data2) {
 
     for (let day = 1; day < 6; day++) {
 
     // create individual card for each day
+
     var futureDate = moment().add(day, 'days').format('L');
     var showFutureDateEl = document.createElement("h3");
     showFutureDateEl.textContent = futureDate;
     forecastContainerEl.appendChild(showFutureDateEl);
 
     var futureTemp = document.createElement("p");
-    futureTemp = ("Temp: " + Math.round(loopWeather.main.temp) + " " + '\xB0' + "F");
+    futureTemp.textContent = ("Temp: " + Math.round(data2.current.temp) + " " + '\xB0' + "F");
+    forecastContainerEl.appendChild(futureTemp);
+
+    var futureWind = document.createElement("p");
+    futureWind.textContent = ("Wind speed: " + data2.current.wind_speed + "mph");
+    forecastContainerEl.appendChild(futureWind);
+
+    var futureHumidity = document.createElement("p");
+    futureHumidity.textContent = ("Humidity: " + data2.current.humidity + "%");
+    forecastContainerEl.appendChild(futureHumidity);
 
     };
 };

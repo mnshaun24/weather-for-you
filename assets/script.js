@@ -1,6 +1,6 @@
 // create variable for API Key
 
-// use this in browser https://api.openweathermap.org/data/2.5/weather?q=minneapolis&appid=51133e26b6dba1c42e2e1b1a94f55fa2&units=imperial
+// use this in browser http://api.openweathermap.org/data/2.5/weather?q=minneapolis&appid=51133e26b6dba1c42e2e1b1a94f55fa2&units=imperial
 var myKey = "51133e26b6dba1c42e2e1b1a94f55fa2";
 
 // create global variables 
@@ -56,7 +56,7 @@ var displayWeather = function(weather, searchTerm) {
     weatherSearchTerm.textContent = searchTerm
 
     // create variable to display icon
-    var weatherIcon = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png";
+    // var weatherIcon = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png";
     
     
 
@@ -66,8 +66,8 @@ var displayWeather = function(weather, searchTerm) {
     showDate.textContent = dateNow;
 
     // display the local weather
-    var weatherIconEl = document.querySelector("#weather-icon");
-    weatherContainerEl.appendChild(mainWeatherEl);
+    // var weatherIconEl = document.querySelector("#weather-icon");
+    // weatherContainerEl.appendChild(mainWeatherEl);
 
     // display temperature
     var mainTempEl = document.createElement("p");
@@ -85,7 +85,7 @@ var displayWeather = function(weather, searchTerm) {
     weatherContainerEl.appendChild(mainHumidityEl);
 
     // use first API call to gather needed information from second API call
-    var APIUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=51133e26b6dba1c42e2e1b1a94f55fa2";
+    var APIUrl = "http://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=51133e26b6dba1c42e2e1b1a94f55fa2";
 
     // fetch second API call and return object then append information from object
         fetch(APIUrl)
@@ -96,16 +96,13 @@ var displayWeather = function(weather, searchTerm) {
                 mainUvEl.textContent = ("UV Index: " + data2.current.uvi);
                 weatherContainerEl.appendChild(mainUvEl);
             })
-        });
+        });        
 
 };
 
 // create loop to display forecast data
 
 var weatherLoop = function(loopWeather, searchTermLoop) {
-
-    // clear old content before loop begins
-    // forecastContainerEl = "";
 
     for (let day = 1; day < 6; day++) {
 
@@ -115,11 +112,12 @@ var weatherLoop = function(loopWeather, searchTermLoop) {
     showFutureDateEl.textContent = futureDate;
     forecastContainerEl.appendChild(showFutureDateEl);
 
-
-
+    var futureTemp = document.createElement("p");
+    futureTemp = ("Temp: " + Math.round(loopWeather.main.temp) + " " + '\xB0' + "F");
 
     };
 };
+
 // make an event listener function when someone submits a city name
 
 citySearchEl.addEventListener("submit", forecastSubmitHandler);

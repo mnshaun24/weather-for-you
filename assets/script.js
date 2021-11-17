@@ -108,11 +108,17 @@ var displayWeather = function(weather, searchTerm) {
 
 var weatherLoop = function(data2) {
 
-    for (let day = 1; day < 6; day++) {
+    for (let day = 0; day < 5; day++) {
+
+    // set up variable for icon display
+    var forecastIcon = "http://openweathermap.org/img/wn/" + data2.daily[day].weather[0].icon + ".png";
 
     // create individual card for each day
 
-    var futureDate = moment().add(day, 'days').format('L');
+    var forecastIconEl = document.querySelector("#forecast-icon");
+    forecastIconEl.innerHTML = `<img src=${forecastIcon}>`;
+
+    var futureDate = moment().add(day+1, 'days').format('L');
     var showFutureDateEl = document.createElement("h3");
     showFutureDateEl.textContent = futureDate;
     forecastContainerEl.appendChild(showFutureDateEl);

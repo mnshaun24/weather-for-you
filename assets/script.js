@@ -9,6 +9,8 @@ var citySearchEl = document.querySelector("#search-form");
 var cityInputEl = document.querySelector("#city-entry");
 var weatherContainerEl = document.querySelector(".city-display");
 var weatherSearchTerm = document.querySelector(".what-city");
+var forecastContainerEl = document.querySelector(".forecast")
+
 
 // create main function that acts when city is searched for
 
@@ -21,6 +23,7 @@ var forecastSubmitHandler = function(event) {
     // check to ensure proper city name was entered
     if (city) {
         getForecast(city);
+        weatherLoop(city);
         cityInputEl.value = "";
     } else {
         alert("Please enter a valid city");
@@ -36,8 +39,10 @@ var getForecast = function(city) {
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myKey +"&units=imperial";
 
     // run function to return weather data about city
-    var response = fetch(queryURL).then(function(response) {
-        response.json().then(function(data) {
+    fetch(queryURL)
+        .then(function(response) {
+        response.json()
+            .then(function(data) {
             displayWeather(data, city);
         });
 });
@@ -58,7 +63,7 @@ var displayWeather = function(weather, searchTerm) {
 
     // display the local weather
     var mainWeatherEl = document.createElement("p");
-    mainWeatherEl.textContent = (weather.weather[0].main);
+    mainWeatherEl.textContent = (weather.weather[0].icon);
     weatherContainerEl.appendChild(mainWeatherEl);
 
     // display temperature
@@ -76,12 +81,42 @@ var displayWeather = function(weather, searchTerm) {
     mainHumidityEl.textContent = ("Humidity: " + weather.main.humidity + '\u0025')
     weatherContainerEl.appendChild(mainHumidityEl);
 
+    // use first API call to gather needed information from second API call
     var APIUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=51133e26b6dba1c42e2e1b1a94f55fa2";
-    mainUvEl = document.createElement("p");
-    mainUvEl.textContent = (onecall.current.uvi);
-    weatherContainerEl.appendChild(mainUvEl);
+
+    // fetch second API call and return object then append information from object
+        fetch(APIUrl)
+        .then(function (response2) {
+            response2.json()
+            .then(function(data2) {
+                mainUvEl = document.createElement("p");
+                mainUvEl.textContent = ("UV Index: " + data2.current.uvi);
+                weatherContainerEl.appendChild(mainUvEl);
+            })
+        });
+
 };
 
+// create loop to display forecast data
+
+var weatherLoop = function(loopWeather, searchTermLoop) {
+
+    // clear old content before loop begins
+    // forecastContainerEl = "";
+
+    for (let day = 1; day < 6; day++) {
+
+    // create individual card for each day
+    var futureDate = moment().add(day, 'days').format('L');
+    var showFutureDateEl = document.createElement("h3");
+    showFutureDateEl.textContent = futureDate;
+    forecastContainerEl.appendChild(showFutureDateEl);
+
+
+
+
+    };
+};
 // make an event listener function when someone submits a city name
 
 citySearchEl.addEventListener("submit", forecastSubmitHandler);

@@ -56,7 +56,7 @@ var displayWeather = function(weather, searchTerm) {
     weatherSearchTerm.textContent = searchTerm
 
     // create variable to display icon
-    // var weatherIcon = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png";
+    var weatherIcon = "http://openweathermap.org/img/wn/01d.png";
     
     
 
@@ -66,8 +66,8 @@ var displayWeather = function(weather, searchTerm) {
     showDate.textContent = dateNow;
 
     // display the local weather
-    // var weatherIconEl = document.querySelector("#weather-icon");
-    // weatherContainerEl.appendChild(mainWeatherEl);
+    var weatherIconEl = document.querySelector("#weather-icon");
+    weatherContainerEl.innerHTML = `<img src=icons/${weatherIcon}.png>`;
 
     // display temperature
     var mainTempEl = document.createElement("p");

@@ -10,6 +10,13 @@ var cityInputEl = document.querySelector("#city-entry");
 var weatherContainerEl = document.querySelector(".city-display");
 var weatherSearchTerm = document.querySelector(".what-city");
 var forecastContainerEl = document.querySelector(".forecast");
+var cityHistoryContainer = document.querySelector("#city-list");
+
+// create function to push button push into cityInputEl
+
+// var savedCityHandler = function(event) {
+//     var cityClick =
+// }
 
 // create main function that acts when city is searched for
 
@@ -22,7 +29,6 @@ var forecastSubmitHandler = function(event) {
     // check to ensure proper city name was entered
     if (city) {
         getForecast(city);
-        weatherLoop(city);
         savedCityList(city);
         renderCityList();
         cityInputEl.value = "";
@@ -110,33 +116,44 @@ var weatherLoop = function(data2) {
 
     for (let day = 0; day < 5; day++) {
 
-    // inserted console log for testing
-    console.log(data2);
+            console.log(data2)
 
     // set up variable for icon display
     var forecastIcon = "http://openweathermap.org/img/wn/" + data2.daily[day].weather[0].icon + ".png";
+  
 
     // create individual card for each day
 
-    var forecastIconEl = document.querySelector("#forecast-icon");
-    forecastIconEl.innerHTML = `<img src=${forecastIcon}>`;
+    var fiveDayContainer = document.createElement("div");
+    fiveDayContainer.setAttribute("id", day)
+    forecastContainerEl.appendChild(fiveDayContainer)
 
+    // display icon
+    var forecastIconHolder = document.querySelector("#forecast-icon-span");
+    var forecastIconImg = document.createElement("img");
+    forecastIconImg.setAttribute("src", forecastIcon);
+    fiveDayContainer.appendChild(forecastIconImg);
+
+    // display date
     var futureDate = moment().add(day+1, 'days').format('L');
     var showFutureDateEl = document.createElement("h3");
     showFutureDateEl.textContent = futureDate;
-    forecastContainerEl.appendChild(showFutureDateEl);
+    fiveDayContainer.appendChild(showFutureDateEl);
 
+    // display temp
     var futureTemp = document.createElement("p");
-    futureTemp.textContent = ("Temp: " + Math.round(data2.current.temp) + " " + '\xB0' + "F");
-    forecastContainerEl.appendChild(futureTemp);
+    futureTemp.textContent = ("Temp: " + Math.round(data2.daily[day].temp.day) + " " + '\xB0' + "F");
+    fiveDayContainer.appendChild(futureTemp);
 
+    // display wind speed
     var futureWind = document.createElement("p");
-    futureWind.textContent = ("Wind speed: " + data2.current.wind_speed + "mph");
-    forecastContainerEl.appendChild(futureWind);
+    futureWind.textContent = ("Wind speed: " + data2.daily[day].wind_speed + "mph");
+    fiveDayContainer.appendChild(futureWind);
 
+    // display humidity
     var futureHumidity = document.createElement("p");
-    futureHumidity.textContent = ("Humidity: " + data2.current.humidity + "%");
-    forecastContainerEl.appendChild(futureHumidity);
+    futureHumidity.textContent = ("Humidity: " + data2.daily[day].humidity + "%");
+    fiveDayContainer.appendChild(futureHumidity);
 
     };
 };
@@ -156,14 +173,18 @@ var savedCityList = function(cityName) {
 var renderCityList = function() {
 
     // make sure city list is cleared before storing anything
-    weatherContainerEl.textContent = "";
+    cityHistoryContainer.textContent = "";
 
     var savedCities = JSON.parse(localStorage.getItem("city-list")) || [];
+
+    // return only the first 5 elements of the array
+    var fiveCities = savedCities.slice(0, 5);
     
     for (let i = 0; i < savedCities.length; i++) {
         var insertCity = document.createElement("button");
-        insertCity.textContent = savedCities[i];
-        weatherContainerEl.appendChild(insertCity);
+        insertCity.textContent = fiveCities[i];
+        insertCity.setAttribute("id", "city" + i)
+        cityHistoryContainer.appendChild(insertCity);
     
         
     }
@@ -175,3 +196,7 @@ renderCityList();
 // make an event listener function when someone submits a city name
 
 citySearchEl.addEventListener("submit", forecastSubmitHandler);
+
+// make an event listener for when someone clicks on a saved city
+
+insertCity.addEventListener("submit", savedCityHandler)

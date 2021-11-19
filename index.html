@@ -14,7 +14,7 @@
         <h1 class="dashboard text-center bg-primary">Weather Dashboard</h1>
     </header>
 
-    <main class="main-style">
+    <main class="main-style row">
         <!-- start elements for left side search -->
         <section id="city-search" class="col-2 lh-lg d-flex flex-column">
             <form id="search-form" class=".col-form-label-sm border-bottom border-2 border-dark pb-4 text-center">
@@ -31,18 +31,18 @@
         <!-- end left side search -->
 
             <!-- city info element -->
-        <section id="all-display" class="col-10 d-inline-flex">
+        <section id="all-display" class="col-10 d-inline-flex row">
             <!-- div to hold city and date and weather info -->
             <div class="border border-secondary">
                 <h3 class="what-city"></h3><span id="show-date"><img id="weather-icon" /></span>
-                <div class="city-display border border-secondary">
+                <div class="city-display">
 
                 </div>
 
             </div>
 
             <!-- forecast element -->
-            <div class="forecast">
+            <div class="forecast row">
 
             </div>
         </section>

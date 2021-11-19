@@ -112,6 +112,9 @@ var displayWeather = function(weather, searchTerm) {
 
 var weatherLoop = function(data2) {
 
+    // clear forecast container before displaying anything
+    forecastContainerEl.textContent = "";
+
     for (let day = 0; day < 5; day++) {
 
             console.log(data2)
@@ -124,6 +127,7 @@ var weatherLoop = function(data2) {
 
     var fiveDayContainer = document.createElement("div");
     fiveDayContainer.setAttribute("id", day)
+    fiveDayContainer.setAttribute("class", "col")
     forecastContainerEl.appendChild(fiveDayContainer)
 
     // display icon

@@ -10,12 +10,11 @@ var cityInputEl = document.querySelector("#city-entry");
 var weatherContainerEl = document.querySelector(".city-display");
 var weatherSearchTerm = document.querySelector(".what-city");
 var forecastContainerEl = document.querySelector(".forecast");
-var cityHistoryContainer = document.querySelector("#city-list");
+var cityHistoryContainer = document.querySelector("#city-history");
 
 // create function to push button push into cityInputEl
 
 // var savedCityHandler = function(event) {
-//     var cityClick =
 // }
 
 // create main function that acts when city is searched for
@@ -67,7 +66,6 @@ var displayWeather = function(weather, searchTerm) {
     var weatherIcon = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png";
     
     
-
     // display the date along with the city
     var dateNow = moment().format('L');
     var showDate = document.querySelector("#show-date");
@@ -163,11 +161,11 @@ var weatherLoop = function(data2) {
 var savedCityList = function(cityName) {
 
     // either load information from an array or create a blank array
-    var savedCities = JSON.parse(localStorage.getItem("city-list")) || [];
+    var savedCities = JSON.parse(localStorage.getItem("city-history")) || [];
 
     // save the city search into the saved city list
     savedCities.push(cityName);
-    localStorage.setItem("city-list", JSON.stringify(savedCities));
+    localStorage.setItem("city-history", JSON.stringify(savedCities));
 };
 
 var renderCityList = function() {
@@ -175,20 +173,27 @@ var renderCityList = function() {
     // make sure city list is cleared before storing anything
     cityHistoryContainer.textContent = "";
 
-    var savedCities = JSON.parse(localStorage.getItem("city-list")) || [];
+    var savedCities = JSON.parse(localStorage.getItem("city-history")) || [];
 
     // return only the first 5 elements of the array
-    var fiveCities = savedCities.slice(0, 5);
+    // var fiveCities = savedCities.slice(0, 5);
     
     for (let i = 0; i < savedCities.length; i++) {
         var insertCity = document.createElement("button");
-        insertCity.textContent = fiveCities[i];
-        insertCity.setAttribute("id", "city" + i)
+        insertCity.textContent = savedCities[i];
+        insertCity.setAttribute("id", "city" + i);
+        insertCity.setAttribute("class", "mt-3")
+        insertCity.type = "button";
         cityHistoryContainer.appendChild(insertCity);
-    
-        
-    }
+        insertCity.onclick = cityClick;
+                
+    };
 };
+
+var cityClick = function() {
+    getForecast(this.textContent);
+};
+
 
 // call render city function so that old city buttons display on refresh
 renderCityList();
@@ -198,5 +203,3 @@ renderCityList();
 citySearchEl.addEventListener("submit", forecastSubmitHandler);
 
 // make an event listener for when someone clicks on a saved city
-
-insertCity.addEventListener("submit", savedCityHandler)

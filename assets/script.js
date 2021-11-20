@@ -101,8 +101,12 @@ var displayWeather = function(weather, searchTerm) {
             .then(function(data2) {
                 weatherLoop(data2)
                 mainUvEl = document.createElement("p");
-                mainUvEl.textContent = ("UV Index: " + data2.current.uvi);
+                mainUvEl.textContent = ("UV Index: ");
+                sideUvEl = document.createElement("span");
+                sideUvEl.textContent = (data2.current.uvi);
+                sideUvEl.setAttribute("class", "bg-success text-white");
                 weatherContainerEl.appendChild(mainUvEl);
+                mainUvEl.appendChild(sideUvEl);
             })
         });        
 
@@ -127,20 +131,21 @@ var weatherLoop = function(data2) {
 
     var fiveDayContainer = document.createElement("div");
     fiveDayContainer.setAttribute("id", day)
-    fiveDayContainer.setAttribute("class", "col")
+    fiveDayContainer.setAttribute("class", "col-2 bg-secondary m-3 text-white mw-50")
     forecastContainerEl.appendChild(fiveDayContainer)
-
-    // display icon
-    var forecastIconHolder = document.querySelector("#forecast-icon-span");
-    var forecastIconImg = document.createElement("img");
-    forecastIconImg.setAttribute("src", forecastIcon);
-    fiveDayContainer.appendChild(forecastIconImg);
 
     // display date
     var futureDate = moment().add(day+1, 'days').format('L');
     var showFutureDateEl = document.createElement("h3");
     showFutureDateEl.textContent = futureDate;
     fiveDayContainer.appendChild(showFutureDateEl);
+
+    // display icon
+    var forecastIconHolder = document.querySelector("#forecast-icon-span");
+    var forecastIconImg = document.createElement("img");
+    forecastIconImg.setAttribute("src", forecastIcon);
+    fiveDayContainer.appendChild(forecastIconImg);
+    
 
     // display temp
     var futureTemp = document.createElement("p");
@@ -168,7 +173,7 @@ var savedCityList = function(cityName) {
     var savedCities = JSON.parse(localStorage.getItem("city-history")) || [];
 
     // save the city search into the saved city list
-    savedCities.push(cityName);
+    savedCities.unshift(cityName);
     localStorage.setItem("city-history", JSON.stringify(savedCities));
 };
 
@@ -188,8 +193,12 @@ var renderCityList = function() {
         insertCity.setAttribute("id", "city" + i);
         insertCity.setAttribute("class", "mt-3")
         insertCity.type = "button";
-        cityHistoryContainer.appendChild(insertCity);
+        cityHistoryContainer.append(insertCity);
         insertCity.onclick = cityClick;
+
+        if (i > 5) {
+            break;
+        }
                 
     };
 };

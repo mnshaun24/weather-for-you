@@ -184,8 +184,6 @@ var renderCityList = function() {
 
     var savedCities = JSON.parse(localStorage.getItem("city-history")) || [];
 
-    // return only the first 5 elements of the array
-    // var fiveCities = savedCities.slice(0, 5);
     
     for (let i = 0; i < savedCities.length; i++) {
         var insertCity = document.createElement("button");
@@ -196,6 +194,7 @@ var renderCityList = function() {
         cityHistoryContainer.append(insertCity);
         insertCity.onclick = cityClick;
 
+         // return only the first 5 elements of the array
         if (i > 5) {
             break;
         }

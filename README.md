@@ -17,7 +17,7 @@ https://mnshaun24.github.io/weather-for-you/
 
 
 ## Screenshot
-!(
+!(./assets/Images/weather.jpg)
 
 ## Contribution
 Shaun Sticka

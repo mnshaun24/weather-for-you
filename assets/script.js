@@ -42,7 +42,7 @@ var forecastSubmitHandler = function(event) {
 var getForecast = function(city) {
 
     // create variable to understand city input
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myKey +"&units=imperial";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myKey +"&units=imperial";
 
     // run function to return weather data about city
     fetch(queryURL)
@@ -63,7 +63,7 @@ var displayWeather = function(weather, searchTerm) {
     weatherSearchTerm.textContent = searchTerm
 
     // create variable to display icon
-    var weatherIcon = "http://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png";
+    var weatherIcon = "https://openweathermap.org/img/wn/" + weather.weather[0].icon + ".png";
     
     
     // display the date along with the city
@@ -91,7 +91,7 @@ var displayWeather = function(weather, searchTerm) {
     weatherContainerEl.appendChild(mainHumidityEl);
 
     // use first API call to gather needed information from second API call
-    var APIUrl = "http://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=" + myKey + "&units=imperial";
+    var APIUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + weather.coord.lat + "&lon=" + weather.coord.lon + "&appid=" + myKey + "&units=imperial";
 
     console.log(APIUrl)
     // fetch second API call and return object then append information from object
@@ -124,7 +124,7 @@ var weatherLoop = function(data2) {
             console.log(data2)
 
     // set up variable for icon display
-    var forecastIcon = "http://openweathermap.org/img/wn/" + data2.daily[day].weather[0].icon + ".png";
+    var forecastIcon = "https://openweathermap.org/img/wn/" + data2.daily[day].weather[0].icon + ".png";
   
 
     // create individual card for each day
